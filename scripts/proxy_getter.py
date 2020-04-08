@@ -1,18 +1,41 @@
 from selenium import webdriver
-import secrets
+import re
 
 def getProxy():
     driver = webdriver.Chrome(executable_path="../driver/chromedriver.exe")
     driver.get("http://spys.one/en/socks-proxy-list/")
-    elem = driver.find_elements_by_css_selector("font.spy14")
-    i = 0
-    proxy_array=[]
-    for el in elem:
-        if i==4:
-            proxy_array.append(el.text)
-            i = 0
-        i = i+1
+    rawList = driver.find_elements_by_css_selector("font.spy14")
+    ipList=[]
+    for i in rawList:
+        ipList.append(i.text)
 
-    proxy_array = proxy_array[:len(proxy_array)-3]
+    regex = re.compile(r'[0-9]+(?:\.[0-9]+){3}:[0-9]+')
+    rawList = list(filter(regex.match, ipList))
     driver.close()
-    return secrets.choice(proxy_array)
+    return rawList
+
+
+
+def has_connection(driver):
+    try:
+        driver.find_element_by_id("headerLogo")
+        return True
+    except: return False
+
+
+
+def findWorkingProxy():
+    hasInternet = False
+    proxyList = getProxy()
+    while not hasInternet:
+        PROXY = proxyList.pop()
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--proxy-server=socks5://' + PROXY)
+        driver = webdriver.Chrome(executable_path=r"../driver/chromedriver.exe", options=chrome_options)
+        driver.get("http://olx.ua")
+        hasInternet = has_connection(driver)
+        if not hasInternet:
+            driver.close()
+    print("isConnected")
+    print(PROXY)
+    return PROXY
