@@ -1,19 +1,38 @@
+import codecs
 import re
 from datetime import datetime
 
 TIME_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]"
 TODAY_PATTERN = "Сегодня"
 FILE_LAST_UPDATE_TIME_PATH = "resources/time.ini"
+FILE_WORDS_PATHS = "resources/words.ini"
 
 
-def sort_by_time(publications):
+def filter_by_time(publications):
     last_update_time = get_last_update_time()
-
+    time_succesfull_pubs = []
     for pub in publications:
         pub_time = get_date(pub.text)
 
         if pub_time is not False and pub_time > last_update_time:
-            print("OK")
+            time_succesfull_pubs.append(pub)
+        break
+    save_current_time()
+    return time_succesfull_pubs
+
+
+def filter_by_words(text):
+    text = text.lower()
+    file = codecs.open(FILE_WORDS_PATHS, 'r', 'utf_8_sig')
+    words = file.readlines()
+    file.close()
+
+    for word in words:
+        good_word = word[:-2]
+        if good_word in text:
+            return False
+    return True
+
 
 def get_date(text):
     try:

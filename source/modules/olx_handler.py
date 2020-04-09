@@ -2,14 +2,13 @@ from entities.publication import Publication
 import chromedriver_binary
 
 from modules.proxy_getter import getDriver, find_working_proxy
-from modules.publication_filter import sort_by_time
-
+from modules.publication_filter import filter_by_time
 
 def get_publications(min_sum, max_sum, proxy):
 
     search_link = 'https://www.olx.ua/elektronika/noutbuki-i-aksesuary/?search%5Bfilter_float_price%3Afrom%5D='+ min_sum + '&search%5Bfilter_float_price%3Ato%5D=' + max_sum
     driver = getDriver(proxy)
-    publications =""
+    publications = ""
     while True:
         try:
             driver.get(search_link)
@@ -20,12 +19,13 @@ def get_publications(min_sum, max_sum, proxy):
             continue
         break
 
-
-    publications = sort_by_time(publications)
+    publications = filter_by_time(publications)
     pubs_list = []
 
     for pub in publications:
         pub_driver = getDriver(proxy)
+        pub_title = pub.find_element_by_css_selector(".marginright5.link.linkWithHash.detailsLink").text
+        print(pub_title)
         pub_link = pub.find_element_by_class_name('linkWithHash').get_attribute('href')
         pub_desc=""
         while True:
