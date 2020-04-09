@@ -13,10 +13,8 @@ def filter_by_time(publications):
     time_succesfull_pubs = []
     for pub in publications:
         pub_time = get_date(pub.text)
-
         if pub_time is not False and pub_time > last_update_time:
             time_succesfull_pubs.append(pub)
-        break
     save_current_time()
     return time_succesfull_pubs
 
