@@ -25,7 +25,7 @@ def getDriver(proxy):
     return driver
 
 
-def getProxy():
+def get_proxy():
     driver = webdriver.Chrome()
     driver.get("http://spys.one/en/socks-proxy-list/")
     rawList = driver.find_elements_by_css_selector("font.spy14")
@@ -47,9 +47,9 @@ def has_connection(driver):
         return False
 
 
-def findWorkingProxy():
+def find_working_proxy():
     hasInternet = False
-    proxyList = getProxy()
+    proxyList = get_proxy()
     while not hasInternet:
         proxy = proxyList.pop()
         driver = getDriver(proxy)
