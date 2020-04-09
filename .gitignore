@@ -1,3 +1,5 @@
 /.idea/
 /venv/
 /source/__pycache__/
+/source/modules/__pycache__/
+.pyc

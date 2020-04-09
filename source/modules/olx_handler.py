@@ -1,7 +1,7 @@
 from entities.publication import Publication
 import chromedriver_binary
 
-from modules.proxy_getter import getDriver
+from modules.proxy_getter import getDriver, findWorkingProxy
 
 
 def getPublications(min_sum, max_sum, proxy):
@@ -11,16 +11,22 @@ def getPublications(min_sum, max_sum, proxy):
     driver.get(search_link)
 
     publications = driver.find_elements_by_css_selector(".marginright5.link.linkWithHash.detailsLink")
-    pubs_list = list
+    pubs_list = []
+
     for pub in publications:
         pub_driver = getDriver(proxy)
         pub_link = pub.get_attribute('href')
-        pub_driver.get(pub_link)
-
-        pub_desc = pub_driver.find_element_by_id("textContent").text
+        pub_desc=""
+        while True:
+            try:
+                pub_driver.get(pub_link)
+                pub_desc = pub_driver.find_element_by_id("textContent").text
+            except:
+                pub_driver = getDriver(findWorkingProxy())
+                continue
+            break
 
         publication = Publication(pub_link, pub.text, pub_desc)
         publication.print()
         pubs_list.append(publication)
-
         pub_driver.close()
