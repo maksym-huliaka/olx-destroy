@@ -5,8 +5,6 @@ class Publication:
         self.title = title
         self.description = description
     
-    def print(self):
-        print(self.title)
-        print(self.price)
-        print(self.link)
-        print(self.description + '\n')
+    def to_string(self):
+        return self.title+'\n'+'Price: '+self.price+'\n\n'+self.description +'\n\nLink: '+self.link+'\n'
+

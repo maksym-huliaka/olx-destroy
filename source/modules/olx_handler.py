@@ -36,7 +36,8 @@ def get_clean_publications(publications, proxy):
     return pubs_list
 
 
-def get_publications(min_sum, max_sum, proxy):
+def get_publications(min_sum, max_sum):
+    proxy = find_working_proxy()
     search_link = 'https://www.olx.ua/elektronika/noutbuki-i-aksesuary/?search%5Bfilter_float_price%3Afrom%5D='+ min_sum \
                   + '&search%5Bfilter_float_price%3Ato%5D=' + max_sum
     publications = ""
@@ -50,4 +51,7 @@ def get_publications(min_sum, max_sum, proxy):
             driver = getDriver(find_working_proxy())
             continue
         break
-    return get_clean_publications(publications, proxy)
+    clean_publications = get_clean_publications(publications, proxy)
+    driver.close()
+    return clean_publications
+
