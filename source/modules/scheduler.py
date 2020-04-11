@@ -1,4 +1,4 @@
-from apscheduler.schedulers.background import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler
 
 from modules.telegram.bot import BOT
 from modules.telegram.bot_helper import send_publications
