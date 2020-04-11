@@ -3,8 +3,8 @@ import time
 from modules.olx_handler import get_publications
 from modules.publication_filter import FILE_WORDS_PATHS
 
-FILE_GREETING_PATH='resources/greeting.ini'
-FILE_PRICE_RANGE_PATH='resources/price_range.ini'
+FILE_GREETING_PATH='/app/source/resources/greeting.ini'
+FILE_PRICE_RANGE_PATH='/app/source/resources/price_range.ini'
 
 def get_price(n):
     return open(FILE_PRICE_RANGE_PATH).readlines()[n]
