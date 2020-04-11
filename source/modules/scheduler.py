@@ -3,7 +3,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from modules.telegram.bot import BOT
 from modules.telegram.bot_helper import send_publications
 
-CHAT_ID_PATH='resources/chatid.ini'
+CHAT_ID_PATH='/app/source/resources/chatid.ini'
 scheduler = BackgroundScheduler()
 
 def job_function ():
