@@ -1,14 +1,14 @@
+import os
+
 from selenium import webdriver
 import re
-
-from modules.path import CHROMEDRIVER_PATH, GOOGLE_CHROME_PATH
 
 
 def getDriver(proxy):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
-    chrome_options.binary_location = GOOGLE_CHROME_PATH
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     if proxy:
         prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2, 'javascript': 2,
                                                         'plugins': 2, 'popups': 2, 'geolocation': 2,
@@ -27,7 +27,7 @@ def getDriver(proxy):
         chrome_options.add_argument("disable-infobars")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_experimental_option('prefs', prefs)
-    driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=chrome_options)
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
     return driver
 
 
