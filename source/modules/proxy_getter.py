@@ -1,10 +1,16 @@
 from selenium import webdriver
 import re
 
+from modules.path import CHROMEDRIVER_PATH, GOOGLE_CHROME_PATH
+
 
 def getDriver(proxy):
     chrome_options = webdriver.ChromeOptions()
-    prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2, 'javascript': 2,
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.binary_location = GOOGLE_CHROME_PATH
+    if proxy:
+        prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2, 'javascript': 2,
                                                         'plugins': 2, 'popups': 2, 'geolocation': 2,
                                                         'notifications': 2, 'auto_select_certificate': 2,
                                                         'mouselock': 2, 'mixed_script': 2, 'media_stream': 2,
@@ -17,16 +23,16 @@ def getDriver(proxy):
                                                         'site_engagement': 2,
                                                         'durable_storage': 2}}
 
-    chrome_options.add_argument('--proxy-server=socks5://' + proxy)
-    chrome_options.add_argument("disable-infobars")
-    chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_experimental_option('prefs', prefs)
-    driver = webdriver.Chrome(options=chrome_options)
+        chrome_options.add_argument('--proxy-server=socks5://' + proxy)
+        chrome_options.add_argument("disable-infobars")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_experimental_option('prefs', prefs)
+    driver = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, options=chrome_options)
     return driver
 
 
 def get_proxy():
-    driver = webdriver.Chrome()
+    driver = getDriver("")
     driver.get("http://spys.one/en/socks-proxy-list/")
     rawList = driver.find_elements_by_css_selector("font.spy14")
     ipList = []
@@ -52,15 +58,17 @@ def find_working_proxy():
     proxyList = get_proxy()
     while not hasInternet:
         proxy = proxyList.pop()
+        print("Checking proxy: " + proxy)
         driver = getDriver(proxy)
         driver.set_page_load_timeout(90)
         try:
             driver.get("http://olx.ua")
             hasInternet = has_connection(driver)
         except:
+            print("BAD proxy! Finding another..")
             hasInternet = False
 
         driver.close()
-    print("isConnected: " + proxy)
+    print("is Connected: " + proxy)
 
     return proxy

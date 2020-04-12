@@ -14,11 +14,13 @@ keyboard1.row('/range', '/word')
 
 @BOT.message_handler(commands=['start'])
 def start_message(message):
+    print("Catched message : "+ message.text)
     BOT.send_message(message.chat.id, get_greeting()
                      ,reply_markup=keyboard1)
 
 @BOT.message_handler(commands=['range'])
 def range_message(message):
+    print("Catched message : "+ message.text)
     if set_price_range(message):
         BOT.send_message(message.chat.id, "Success! New price range added!")
     else:
@@ -26,6 +28,7 @@ def range_message(message):
 
 @BOT.message_handler(commands=['word'])
 def word_message(message):
+    print("Catched message : "+ message.text)
     if set_restriction_word(message):
         BOT.send_message(message.chat.id, "Success! New restriction is added")
     else:
@@ -35,6 +38,7 @@ def word_message(message):
 
 @BOT.message_handler(content_types=['text'])
 def send_text(message):
+    print("Catched message : "+ message.text)
     if message.text == '/pubs' or message.text == 'Show Pubs':
         BOT.send_message(message.chat.id, 'Wait a minut plz')
         send_publications(message.chat.id, BOT)

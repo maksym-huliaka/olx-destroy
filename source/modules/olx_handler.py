@@ -1,5 +1,4 @@
 from entities.publication import Publication
-import chromedriver_binary
 
 from modules.proxy_getter import getDriver, find_working_proxy
 from modules.publication_filter import filter_by_time, filter_by_words
@@ -47,7 +46,7 @@ def get_publications(min_sum, max_sum):
             driver.get(search_link)
             publications = driver.find_elements_by_css_selector(".offer-wrapper")
         except:
-            print("CANT FIND element by css selector")
+            print("CANT find element by css selector! Trying to find another proxy..")
             driver = getDriver(find_working_proxy())
             continue
         break

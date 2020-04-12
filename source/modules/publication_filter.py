@@ -2,10 +2,10 @@ import codecs
 import re
 from datetime import datetime
 
+from modules.path import FILE_WORDS_PATHS, FILE_LAST_UPDATE_TIME_PATH
+
 TIME_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]"
 TODAY_PATTERN = "Сегодня"
-FILE_LAST_UPDATE_TIME_PATH = "/app/source/resources/time.ini"
-FILE_WORDS_PATHS = "/app/source/resources/words.ini"
 
 
 def filter_by_time(publications):
