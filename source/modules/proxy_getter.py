@@ -27,7 +27,7 @@ def getDriver(proxy):
         chrome_options.add_argument("disable-infobars")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_experimental_option('prefs', prefs)
-    driver = webdriver.Chrome(execution_path=CHROMEDRIVER_PATH, options=chrome_options)
+    driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=chrome_options)
     return driver
 
 
