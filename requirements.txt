@@ -1,3 +1,4 @@
 selenium==3.141.0
 apscheduler==3.6.3
 pytelegrambotapi==3.6.7
+chromedriver-binary==81.0.4044.69.0
