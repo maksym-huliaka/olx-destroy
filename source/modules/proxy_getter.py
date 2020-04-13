@@ -56,21 +56,21 @@ def has_connection(driver):
 
 
 def find_working_proxy():
-    hasInternet = False
-    proxyList = get_proxy()
-    while not hasInternet:
-        proxy = proxyList.pop()
-        print("Checking proxy: " + proxy)
-        driver = getDriver(proxy)
-        driver.set_page_load_timeout(90)
-        try:
-            driver.get("http://olx.ua")
-            hasInternet = has_connection(driver)
-        except:
-            print("BAD proxy! Finding another..")
-            hasInternet = False
+    # hasInternet = False
+    # proxyList = get_proxy()
+    # while not hasInternet:
+    #     proxy = proxyList.pop()
+    #     print("Checking proxy: " + proxy)
+    #     driver = getDriver(proxy)
+    #     driver.set_page_load_timeout(90)
+    #     try:
+    #         driver.get("http://olx.ua")
+    #         hasInternet = has_connection(driver)
+    #     except:
+    #         print("BAD proxy! Finding another..")
+    #         hasInternet = False
+    #
+    #     driver.close()
+    # print("is Connected: " + proxy)
 
-        driver.close()
-    print("is Connected: " + proxy)
-
-    return proxy
+    return "kek"
