@@ -19,6 +19,7 @@ def get_clean_publications(publications, proxy):
         while True:
             try:
                 pub_driver.get(pub_link)
+                print(pub_driver.page_source())
                 pub_desc = pub_driver.find_element_by_id("textContent").text
             except:
                 print("CANT FIND element by id")
