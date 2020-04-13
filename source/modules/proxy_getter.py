@@ -11,7 +11,7 @@ def getDriver(proxy):
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    if proxy:
+    if False is not False:
         prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2, 'javascript': 2,
                                                         'plugins': 2, 'popups': 2, 'geolocation': 2,
                                                         'notifications': 2, 'auto_select_certificate': 2,
