@@ -19,6 +19,7 @@ def get_clean_publications(publications, proxy):
         while True:
             try:
                 pub_driver.get(pub_link)
+                print("SOURCE PAGE")
                 print(pub_driver.page_source())
                 pub_desc = pub_driver.find_element_by_id("textContent").text
             except:
@@ -45,6 +46,8 @@ def get_publications(min_sum, max_sum):
     while True:
         try:
             driver.get(search_link)
+            print("SOURCE PAGE")
+            print(driver.page_source())
             publications = driver.find_elements_by_css_selector(".offer-wrapper")
         except:
             print("CANT find element by css selector! Trying to find another proxy..")
