@@ -1,3 +1,5 @@
+import sys
+
 from entities.publication import Publication
 
 from modules.proxy_getter import getDriver, find_working_proxy
@@ -19,11 +21,11 @@ def get_clean_publications(publications, proxy):
         while True:
             try:
                 pub_driver.get(pub_link)
-                print("SOURCE PAGE")
-                print(pub_driver.page_source())
+                print(pub_link)
+                print(pub_driver.page_source)
                 pub_desc = pub_driver.find_element_by_id("textContent").text
             except:
-                print("CANT FIND element by id")
+                print("CANT FIND element by id",sys.exc_info()[0])
                 pub_driver = getDriver(find_working_proxy())
                 continue
             break
@@ -46,11 +48,9 @@ def get_publications(min_sum, max_sum):
     while True:
         try:
             driver.get(search_link)
-            print("SOURCE PAGE")
-            print(driver.page_source())
-            publications = driver.find_elements_by_css_selector(".offer-wrapper")
+            publications = driver.find_elements_by_class_name("offer-wrapper")
         except:
-            print("CANT find element by css selector! Trying to find another proxy..")
+            print("CANT find element by css selector! Trying to find another proxy..",sys.exc_info()[0])
             driver = getDriver(find_working_proxy())
             continue
         break
