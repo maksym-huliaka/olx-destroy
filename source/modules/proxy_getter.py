@@ -26,12 +26,12 @@ def getDriver(proxy):
                                                         'site_engagement': 2,
                                                         'durable_storage': 2}}
 
-        chrome_options.add_argument('--proxy-server=socks5://' + proxy)
+        #chrome_options.add_argument('--proxy-server=socks5://' + proxy)
         chrome_options.add_argument("disable-infobars")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_experimental_option('prefs', prefs)
-    #driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+    #driver = webdriver.Chrome(options=chrome_options)
     return driver
 
 
