@@ -1,7 +1,7 @@
 from configparser import ConfigParser
+from modules.path import FILE_APP_PROPERTIES
 
-
-def config(filename='resources/app.properties', section='postgresql'):
+def config(filename = FILE_APP_PROPERTIES, section='postgresql'):
     parser = ConfigParser()
     parser.read(filename)
     db = {}

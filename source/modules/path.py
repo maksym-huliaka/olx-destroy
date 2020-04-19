@@ -5,6 +5,7 @@ FILE_WORDS_PATHS = "/app/source/resources/words.ini"
 FILE_GREETING_PATH='/app/source/resources/greeting.ini'
 FILE_PRICE_RANGE_PATH='/app/source/resources/price_range.ini'
 FILE_URL_GREETING_PATH='/app/source/resources/url_greeting.ini'
+FILE_APP_PROPERTIES='/app/source/resources/app.properties'
 
 # CHAT_ID_PATH='resources/chatid.ini'
 # FILE_LAST_UPDATE_TIME_PATH = "resources/time.ini"
