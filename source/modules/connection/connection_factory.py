@@ -1,6 +1,6 @@
 import os
 import re
-#import chromedriver_binary
+import chromedriver_binary
 from selenium import webdriver
 
 from modules.connection.proxy_tester import filter_proxies
@@ -10,15 +10,30 @@ def getDriver(proxy):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--disable-extensions')
-    chrome_options.add_argument('--headless')
+    #chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     if proxy:
+        prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2, 'javascript': 2,
+                                                        'plugins': 2, 'popups': 2, 'geolocation': 2,
+                                                        'notifications': 2, 'auto_select_certificate': 2,
+                                                        'mouselock': 2, 'mixed_script': 2, 'media_stream': 2,
+                                                        'media_stream_mic': 2, 'media_stream_camera': 2,
+                                                        'protocol_handlers': 2,
+                                                        'ppapi_broker': 2, 'automatic_downloads': 2, 'midi_sysex': 2,
+                                                        'push_messaging': 2, 'ssl_cert_decisions': 2,
+                                                        'metro_switch_to_desktop': 2,
+                                                        'protected_media_identifier': 2, 'app_banner': 2,
+                                                        'site_engagement': 2,
+                                                        'durable_storage': 2}}
+
         #chrome_options.add_argument('--proxy-server=socks5://' + proxy)
         chrome_options.add_argument('--proxy-server=%s' % proxy)
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-    #driver = webdriver.Chrome(options=chrome_options)
+        chrome_options.add_argument("disable-infobars")
+        chrome_options.add_experimental_option('prefs', prefs)
+    #driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
     return driver
 
 
@@ -46,6 +61,28 @@ def has_connection(driver):
 
 
 def get_proxy_driver():
+    proxyList = get_proxy()
+    for proxy in proxyList:
+        print("Checking proxy: " + proxy)
+        proxy_established_driver = getDriver(proxy)
+        proxy_established_driver.set_page_load_timeout(90)
+        try:
+            proxy_established_driver.get("http://olx.ua")
+            proxy_established_driver.find_element_by_id("headerLogo")
+            hasInternet = True
+            break
+        except:
+            proxy_established_driver.close()
+            print("BAD proxy! Finding another..")
+
+    if hasInternet is True:
+        return proxy_established_driver
+    else:
+        return get_proxy_driver()
+
+
+
+def get_proxy_driver2():
     hasInternet = False
     proxyList = get_proxy()
     while not hasInternet:
@@ -63,5 +100,4 @@ def get_proxy_driver():
             print("BAD proxy! Finding another..")
             hasInternet = False
     print("is Connected: " + proxy)
-
     return proxy_established_driver
