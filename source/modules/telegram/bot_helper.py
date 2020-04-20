@@ -44,7 +44,7 @@ def send_publications(chatid, BOT):
         salo = get_publications(url)
         for pub in salo:
             BOT.send_message(chatid, pub.to_string())
-            time.sleep(2)
+            time.sleep(3)
 
 
 def get_greeting():
