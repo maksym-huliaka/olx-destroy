@@ -35,7 +35,7 @@ def get_clean_publications(publications, url, proxy_established_driver):
             break
 
         if not filter_by_words(pub_desc, words):
-            print("BAD")
+            print(pub.link)
             continue
         pub.description=pub_desc
         pubs_list.append(pub)

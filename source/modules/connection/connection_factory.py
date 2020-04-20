@@ -59,6 +59,7 @@ def get_proxy():
     rawList = list(filter(regex.match, ipList))
     rawList = filter_proxies(rawList)
     driver.close()
+    print("[proxy] Found: "+len(rawList))
     return rawList
 
 
