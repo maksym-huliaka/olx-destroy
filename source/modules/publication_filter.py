@@ -23,7 +23,7 @@ def filter_by_time(publications, url):
 def filter_by_words(text, words):
     text = text.lower()
     for word in words:
-        good_word = word[0][:-2]
+        good_word = word[0]
         if good_word in text:
             return False
     return True

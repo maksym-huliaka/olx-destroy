@@ -5,7 +5,7 @@ import requests
 
 timeout = 5
 good_list = []
-THREADS = 30
+THREADS = 8
 
 def verify_list(proxy_list, thread_number):
     global good_list, timeout
@@ -25,8 +25,9 @@ def verify_list(proxy_list, thread_number):
             print('[Thread:', thread_number, '] match:', True if ip == prox.split(':')[0] else False)
             working_list.append(prox)
         except Exception as e:
-            print('[Thread:', thread_number, '] Proxy failed', prox)
-            print('[Thread:', thread_number, '] Proxy failed', e)
+            nihco=";)"
+            #print('[Thread:', thread_number, '] Proxy failed', prox)
+            #print('[Thread:', thread_number, '] Proxy failed', e)
     print('[Thread:', thread_number, '] Working Proxies:', working_list)
     good_list += working_list
 

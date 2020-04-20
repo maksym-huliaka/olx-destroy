@@ -40,6 +40,8 @@ def send_publications(chatid, BOT):
         BOT.send_message(chatid, "⚠WARNING!\nUninitialized url")
     else:
         salo = get_publications(url)
+        if not salo:
+            BOT.send_message(chatid, "😥 There is no new publications.")
         for pub in salo:
             BOT.send_message(chatid, pub.to_string())
             time.sleep(3)

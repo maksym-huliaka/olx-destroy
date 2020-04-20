@@ -1,7 +1,10 @@
 import os
 import re
-import chromedriver_binary
+import time
+
+#import chromedriver_binary
 from selenium import webdriver
+from selenium.webdriver.support.ui import Select
 
 from modules.connection.proxy_tester import filter_proxies
 
@@ -10,10 +13,10 @@ def getDriver(proxy):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--disable-extensions')
-    #chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     if proxy:
         prefs = {'profile.default_content_setting_values': {'cookies': 2, 'images': 2, 'javascript': 2,
                                                         'plugins': 2, 'popups': 2, 'geolocation': 2,
@@ -32,14 +35,21 @@ def getDriver(proxy):
         chrome_options.add_argument('--proxy-server=%s' % proxy)
         chrome_options.add_argument("disable-infobars")
         chrome_options.add_experimental_option('prefs', prefs)
-    #driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+    #driver = webdriver.Chrome(options=chrome_options)
     return driver
 
 
 def get_proxy():
     driver = getDriver("")
     driver.get("http://spys.one/en/https-ssl-proxy/")
+    time.sleep(1)
+    select = Select(driver.find_element_by_id('xpp'))
+    select.select_by_value('2')
+    time.sleep(1)
+    select = Select(driver.find_element_by_id('xpp'))
+    select.select_by_value('2')
+    time.sleep(1)
     rawList = driver.find_elements_by_css_selector("font.spy14")
     ipList = []
     for i in rawList:
@@ -47,9 +57,9 @@ def get_proxy():
 
     regex = re.compile(r'[0-9]+(?:\.[0-9]+){3}:[0-9]+')
     rawList = list(filter(regex.match, ipList))
+    rawList = filter_proxies(rawList)
     driver.close()
-    raw_filtered_list = filter_proxies(rawList)
-    return raw_filtered_list
+    return rawList
 
 
 def has_connection(driver):
@@ -62,6 +72,7 @@ def has_connection(driver):
 
 def get_proxy_driver():
     proxyList = get_proxy()
+    hasInternet = False
     for proxy in proxyList:
         print("Checking proxy: " + proxy)
         proxy_established_driver = getDriver(proxy)
@@ -76,6 +87,7 @@ def get_proxy_driver():
             print("BAD proxy! Finding another..")
 
     if hasInternet is True:
+        print("is Connected")
         return proxy_established_driver
     else:
         return get_proxy_driver()
