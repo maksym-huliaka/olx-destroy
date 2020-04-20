@@ -1,10 +1,9 @@
-import codecs
 import time
 
 from entities.url import Url
 from modules.database.repository.impl import url_repository, word_repository
 from modules.olx_handler import get_publications
-from modules.path import FILE_GREETING_PATH, FILE_WORDS_PATHS, FILE_URL_GREETING_PATH
+from modules.path import FILE_GREETING_PATH, FILE_URL_GREETING_PATH
 
 url = None
 
@@ -39,7 +38,7 @@ def run_url(message):
 def send_publications(chatid, BOT):
     global url
     if url is None:
-        BOT.send_message(chatid, "WARNING! Uninitialized url")
+        BOT.send_message(chatid, "⚠WARNING!\nUninitialized url")
     else:
         salo = get_publications(url)
         for pub in salo:
@@ -48,11 +47,11 @@ def send_publications(chatid, BOT):
 
 
 def get_greeting():
-    return open(FILE_GREETING_PATH).read()
+    return "🙋 Hello, my Friend, wanna  show u some things? \n\nYou can use that commands:\n🌏 To add new URL ya want to search pubs: /url\n📢 To show pubs: /pubs\n📛 To add restriction word: /word {ur word} {category}\n\nGut Luk(pognali) ♿"
 
 
 def get_url_greeting():
-    return open(FILE_URL_GREETING_PATH).read()
+    return "🙋 Hello again, ya can fully customize your URLs\n\n" +"Use such commands:\n" +"📋 To show URLs:\n" +"           ☀/url -list\n" +"➕ To add new URL:\n" +"           ☀/url -add {name} {category} {link}\n" +"➖ To remove URL:\n" +"           ☀/url -remove {name}\n" +"🌏 To choose running URL ya want to see publications:\n" +"           ☀/url -run {name}\n\n" +"Gut Luk again 😏"
 
 
 def set_restriction_word(message):

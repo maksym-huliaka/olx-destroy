@@ -12,5 +12,5 @@ def job_function ():
     send_publications(chat_id, BOT)
 
 def start_scheduler():
-    scheduler.add_job(job_function, trigger='cron', minute='*/15')
+    scheduler.add_job(job_function, trigger='cron', minute='*/30')
     scheduler.start()

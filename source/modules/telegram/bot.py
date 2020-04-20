@@ -7,9 +7,6 @@ from modules.telegram.bot_helper import send_publications, get_greeting, set_res
 
 BOT = telebot.TeleBot('1173914907:AAE0JaLYRR1VpWq-BJnOWzKNj89Qak3pSm0')
 
-min_sum = '500'
-max_sum = '1000'
-
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
 
 keyboard1.row('/pubs')
@@ -35,33 +32,34 @@ def url_message(message):
     if command == '-add':
         try:
             add_url(message)
-            BOT.send_message(message.chat.id, "OK! Url is added to database. Now you can initialize it by \'-run\' tag")
+            BOT.send_message(message.chat.id, "✅OK!\nUrl is added to database. Now you can initialize it by \'-run\' tag")
         except:
             traceback.print_exc()
-            BOT.send_message(message.chat.id, "ERROR! Cant add url")
+            BOT.send_message(message.chat.id, "❌ERROR!\nCan't add url")
 
     if command == '-remove':
         try:
             remove_url(message)
-            BOT.send_message(message.chat.id, "OK! Url is removed")
+            BOT.send_message(message.chat.id, "✅OK!\nUrl is removed")
         except:
             traceback.print_exc()
-            BOT.send_message(message.chat.id, "ERROR! Url with such name not found! Or error is thrown!")
+            BOT.send_message(message.chat.id, "❌ERROR!\nUrl with such name not found! Or error is thrown!")
 
     if command == '-list':
         try:
+            BOT.send_message(message.chat.id, "📋 List:")
             get_urls(message.chat.id, BOT)
         except:
             traceback.print_exc()
-            BOT.send_message(message.chat.id, "ERROR! Error is thrown!")
+            BOT.send_message(message.chat.id, "❌ERROR!\nError is thrown!")
 
     if command == '-run':
         try:
             run_url(message)
-            BOT.send_message(message.chat.id, "OK! Url is initialized")
+            BOT.send_message(message.chat.id, "✅OK!\nUrl is initialized")
         except:
             traceback.print_exc()
-            BOT.send_message(message.chat.id, "ERROR! Url with such name not found! Or error is thrown!")
+            BOT.send_message(message.chat.id, "❌ERROR!\nUrl with such name not found! Or error is thrown!")
 
 
 @BOT.message_handler(commands=['word'])
@@ -72,18 +70,13 @@ def word_message(message):
         category = message.text.split()[2]
         set_restriction_word(message)
         BOT.send_message(message.chat.id,
-                         "Success! New restriction word: '" + word + "' is addedto category :" + category)
+                         "✅Success!\n New restriction word: \n\t       🔹 " + word + "\n Is added to category: \n\t       🔹 " + category)
     except:
         traceback.print_exc()
         BOT.send_message(message.chat.id,
-                         "You can add new Restriction word ranges with that command in that style\n/word {word} {category} \n with valid word!")
+                         "⚠You can add new Restriction word ranges with that command in that style\n/word {word} {category} \n with valid word!")
 
-
-@BOT.message_handler(content_types=['text'])
-def send_text(message):
-    print("Catched message : " + message.text)
-    if message.text == '/pubs' or message.text == 'Show Pubs':
-        BOT.send_message(message.chat.id, 'Wait a minut plz')
+@BOT.message_handler(commands=['pubs'])
+def pubs_message(message):
+        BOT.send_message(message.chat.id, '🕛 Wait a minute! Plz...')
         send_publications(message.chat.id, BOT)
-    elif message.text == 'слава україні':
-        BOT.send_message(message.chat.id, 'ГЕРОЯМ СЛАВА!')

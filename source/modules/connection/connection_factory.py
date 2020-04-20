@@ -1,6 +1,6 @@
 import os
 import re
-import chromedriver_binary
+#import chromedriver_binary
 from selenium import webdriver
 
 from modules.connection.proxy_tester import filter_proxies
@@ -10,7 +10,7 @@ def getDriver(proxy):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--disable-extensions')
-    #chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     if proxy:
@@ -32,8 +32,8 @@ def getDriver(proxy):
         chrome_options.add_argument("disable-infobars")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_experimental_option('prefs', prefs)
-    #driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
-    driver = webdriver.Chrome(options=chrome_options)
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+    #driver = webdriver.Chrome(options=chrome_options)
     return driver
 
 
@@ -48,7 +48,8 @@ def get_proxy():
     regex = re.compile(r'[0-9]+(?:\.[0-9]+){3}:[0-9]+')
     rawList = list(filter(regex.match, ipList))
     driver.close()
-    return rawList
+    raw_filtered_list = filter_proxies(rawList)
+    return raw_filtered_list
 
 
 def has_connection(driver):
@@ -62,8 +63,10 @@ def has_connection(driver):
 def get_proxy_driver():
     hasInternet = False
     proxyList = get_proxy()
-    proxyList = filter_proxies(proxyList)
     while not hasInternet:
+        if not proxyList:
+            print("ERROR! proxy list is empty")
+            proxyList = get_proxy()
         proxy = proxyList.pop()
         print("Checking proxy: " + proxy)
         proxy_established_driver = getDriver(proxy)
