@@ -3,7 +3,6 @@ import time
 from entities.url import Url
 from modules.database.repository.impl import url_repository, word_repository
 from modules.olx_handler import get_publications
-from modules.path import FILE_GREETING_PATH, FILE_URL_GREETING_PATH
 
 url = None
 
