@@ -33,7 +33,7 @@ Object.defineProperty(HTMLDivElement.prototype, "offsetHeight", {
         get: function() {
             // return an arbitrary non-zero dimension if the image failed to load
             if (this.complete && this.naturalHeight == 0) {
-                return 24;
+                return 16;
             }
             // otherwise, return the actual dimension
             return imageDescriptor.get.apply(this);
@@ -45,11 +45,11 @@ const getParameter=WebGLRenderingContext.getParameter;
 WebGLRenderingContext.prototype.getParameter=function(parameter) {
     // UNMASKED_VENDOR_WEBGL WebGLRenderingContext.prototype.VENDOR
     if (parameter === 37445) {
-        return "Intel Open Source Technology Center";
+        return "Google Inc.";
     }
     // UNMASKED_RENDERER_WEBGL WebGLRenderingContext.prototype.RENDERER
     if (parameter === 37446) {
-        return "Mesa DRI Intel(R) Ivybridge Mobile";
+        return "ANGLE (NVIDIA GeForce GTX 1050 Ti Direct3D11 vs_5_0 ps_5_0)";
     }
     return getParameter(parameter);
 };
