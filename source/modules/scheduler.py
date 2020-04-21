@@ -7,8 +7,8 @@ from modules.util.config import config
 scheduler = BackgroundScheduler()
 
 def job_function ():
-    print ('schedule job started')
-    chat_id=open(config(section='telegram').get("telegram.chatId"))
+    print ('[JOB] Schedule job started')
+    chat_id=config().get("telegram.chat_id")
     send_publications(chat_id, BOT)
 
 def start_scheduler():

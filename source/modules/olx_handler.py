@@ -25,17 +25,17 @@ def get_clean_publications(publications, url, proxy_established_driver):
         while True:
             try:
                 proxy_established_driver.get(pub.link)
-                print(pub.link)
                 pub_desc = proxy_established_driver.find_element_by_id("textContent").text
+                print('[OK] Publication is opened: '+pub.link)
             except:
-                print("CANT FIND element by id",sys.exc_info()[0])
+                print("[ERROR] Can't find element by ID on: "+pub.link,sys.exc_info()[0])
                 proxy_established_driver.close()
                 proxy_established_driver = get_proxy_driver()
                 continue
             break
 
         if not filter_by_words(pub_desc, words):
-            print(pub.link)
+            print("[BAD^]")
             continue
         pub.description=pub_desc
         pubs_list.append(pub)
@@ -47,10 +47,14 @@ def get_publications(url):
     proxy_established_driver = get_proxy_driver()
     while True:
         try:
+            print("[WAIT] Opening web page..")
             proxy_established_driver.get(url.url)
             publications = proxy_established_driver.find_elements_by_class_name("offer-wrapper")
+            if not publications:
+                raise Exception()
+            print("[OK] All publication are catched!")
         except:
-            print("CANT find element by css selector! Trying to find another proxy..",sys.exc_info()[0])
+            print("[ERROR] Can't find element by css selector.",sys.exc_info()[0])
             proxy_established_driver = get_proxy_driver()
             continue
         break

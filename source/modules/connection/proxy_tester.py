@@ -20,15 +20,10 @@ def verify_list(proxy_list, thread_number):
             r = requests.get("http://ipinfo.io/json", proxies=proxy_dict, timeout=timeout)
             site_code = r.json()
             ip = site_code['ip']
-            print('[Thread:', thread_number, '] Current IP:', ip)
-            print('[Thread:', thread_number, '] Proxy works:', prox)
-            print('[Thread:', thread_number, '] match:', True if ip == prox.split(':')[0] else False)
+            print('[PROXY][THREAD:', thread_number,'] Proxy works:', prox)
             working_list.append(prox)
         except Exception as e:
             nihco=";)"
-            #print('[Thread:', thread_number, '] Proxy failed', prox)
-            #print('[Thread:', thread_number, '] Proxy failed', e)
-    print('[Thread:', thread_number, '] Working Proxies:', working_list)
     good_list += working_list
 
 

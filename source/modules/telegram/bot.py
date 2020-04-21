@@ -15,7 +15,7 @@ keyboard1.row('/url', '/word')
 
 @BOT.message_handler(commands=['start'])
 def start_message(message):
-    print("Catched message : " + message.text)
+    print("[OK][BOT] Catched message : " + message.text)
     BOT.send_message(message.chat.id,
                      get_greeting(),
                      reply_markup=keyboard1)
@@ -23,6 +23,7 @@ def start_message(message):
 
 @BOT.message_handler(commands=['url'])
 def url_message(message):
+    print("[OK][BOT] Catched message : " + message.text)
     command = ""
     try:
         command = message.text.split()[1]
@@ -64,7 +65,7 @@ def url_message(message):
 
 @BOT.message_handler(commands=['word'])
 def word_message(message):
-    print("Catched message : " + message.text)
+    print("[OK][BOT] Catched message : " + message.text)
     try:
         word = message.text.split()[1]
         category = message.text.split()[2]
@@ -78,5 +79,7 @@ def word_message(message):
 
 @BOT.message_handler(commands=['pubs'])
 def pubs_message(message):
-        BOT.send_message(message.chat.id, '🕛 Wait a minute! Plz...')
-        send_publications(message.chat.id, BOT)
+    print("[OK][BOT] Catched message : " + message.text)
+    BOT.send_message(message.chat.id, '🕛 Wait a minute! Plz...')
+    send_publications(message.chat.id, BOT)
+    print("[OK][BOT] message sent")
