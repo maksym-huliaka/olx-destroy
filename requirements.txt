@@ -2,3 +2,4 @@ selenium==3.141.0
 apscheduler==3.6.3
 pytelegrambotapi==3.6.7
 psycopg2==2.8.5
+selenium-wire==1.0.11

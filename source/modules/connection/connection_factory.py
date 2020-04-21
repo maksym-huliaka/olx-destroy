@@ -1,6 +1,6 @@
 import os
 
-import chromedriver_binary
+#import chromedriver_binary
 from gzip import compress, decompress
 
 from lxml import html
