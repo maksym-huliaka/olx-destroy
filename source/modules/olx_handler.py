@@ -3,7 +3,7 @@ import sys
 from models.publication import Publication
 from modules.database.repository.impl import word_repository
 
-from modules.connection.connection_factory import getDriver, get_proxy_driver
+from modules.connection.proxy_factory import get_driver, get_proxy_driver
 from modules.publication_filter import filter_by_time, filter_by_words
 
 
