@@ -59,6 +59,6 @@ def get_publications(url):
             continue
         break
     clean_publications = get_clean_publications(publications, url, proxy_established_driver)
-    proxy_established_driver.close()
+    #proxy_established_driver.close()
     return clean_publications
 
