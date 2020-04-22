@@ -9,7 +9,5 @@ def test_fingers():
     driver.get('https://recaptcha-demo.appspot.com/recaptcha-v3-request-scores.php')
     time.sleep(5)
     #driver.save_screenshot("modules/fingerprint/screenshot4.png")
-    html_source = driver.page_source
-    print(html_source)
     driver.close()
     print("[OK][TEST] Fingerprints passed")
