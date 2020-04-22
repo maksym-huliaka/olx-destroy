@@ -28,6 +28,8 @@ def get_clean_publications(publications, url, proxy_established_driver):
                 pub_desc = proxy_established_driver.find_element_by_id("textContent").text
                 print('[OK] Publication is opened: '+pub.link)
             except:
+                html_source = proxy_established_driver.page_source
+                print(html_source)
                 print("[ERROR] Can't find element by ID on: "+pub.link,sys.exc_info()[0])
                 proxy_established_driver.close()
                 proxy_established_driver = get_proxy_driver()
