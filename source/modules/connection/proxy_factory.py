@@ -29,4 +29,9 @@ def get_proxy_driver():
     proxy = proxy_list.pop()
     proxy_established_driver = get_driver(proxy)
     print("[OK][DRIVER] Driver with proxy is initialized")
+    proxy_established_driver.get("http://2ip.ru")
+    time.sleep(2)
+    html_source = proxy_established_driver.page_source
+    print(html_source)
+
     return proxy_established_driver
