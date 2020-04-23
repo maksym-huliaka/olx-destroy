@@ -1,6 +1,8 @@
 import re
 from datetime import datetime
 
+import pytz
+
 from modules.database.repository.impl import time_repository
 
 TIME_PATTERN = "([01]?[0-9]|2[0-3]):[0-5][0-9]"
@@ -15,7 +17,6 @@ def filter_by_time(publications, url):
         pub_time = get_date(pub.text)
         if pub_time is not False and pub_time > last_update_time:
             time_succesfull_pubs.append(pub)
-    save_current_time(url)
     return time_succesfull_pubs
 
 
@@ -43,5 +44,6 @@ def get_last_update_time(url):
 
 
 def save_current_time(url):
-    current_time = datetime.now().strftime("%m-%d %H:%M")
+    tz = pytz.timezone('Europe/Kiev')
+    current_time = datetime.now(tz).strftime("%m-%d %H:%M")
     time_repository.update(current_time, url.name)

@@ -4,10 +4,10 @@ from models.publication import Publication
 from modules.database.repository.impl import word_repository
 
 from modules.connection.proxy_factory import get_driver, get_proxy_driver
-from modules.publication_filter import filter_by_time, filter_by_words
+from modules.publication_filter import filter_by_time, filter_by_words, save_current_time
 
 
-def get_clean_publications(publications, url, proxy_established_driver):
+def get_clean_publications(publications, url, proxy_established_driver, chatid, BOT):
     publications = filter_by_time(publications, url)
     pubs_list = []
     words = word_repository.get(url.category)
@@ -39,10 +39,11 @@ def get_clean_publications(publications, url, proxy_established_driver):
             continue
         pub.description=pub_desc
         pubs_list.append(pub)
+        BOT.send_message(chatid, pub.to_string())
     return pubs_list
 
 
-def get_publications(url):
+def get_publications(url,chatid, BOT):
     publications = ""
     proxy_established_driver = get_proxy_driver()
     while True:
@@ -55,10 +56,11 @@ def get_publications(url):
             print("[OK] All publication are catched!")
         except:
             print("[ERROR] Can't find element by css selector.",sys.exc_info()[0])
+            proxy_established_driver.close()
             proxy_established_driver = get_proxy_driver()
             continue
         break
-    clean_publications = get_clean_publications(publications, url, proxy_established_driver)
-    #proxy_established_driver.close()
+    clean_publications = get_clean_publications(publications, url, proxy_established_driver,chatid, BOT)
+    save_current_time(url)
     return clean_publications
 

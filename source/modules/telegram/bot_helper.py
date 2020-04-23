@@ -5,7 +5,7 @@ from modules.database.repository.impl import url_repository, word_repository
 from modules.olx_handler import get_publications
 
 url = None
-
+chatid1 = None
 
 def get_urls(chatid, BOT):
     url_message = ''
@@ -35,16 +35,15 @@ def run_url(message):
 
 
 def send_publications(chatid, BOT):
+    global chatid1
+    chatid1 = chatid
     global url
     if url is None:
         BOT.send_message(chatid, "⚠WARNING!\nUninitialized url")
     else:
-        salo = get_publications(url)
+        salo = get_publications(url, chatid, BOT)
         if not salo:
             BOT.send_message(chatid, "😥 There is no new publications.")
-        for pub in salo:
-            BOT.send_message(chatid, pub.to_string())
-            time.sleep(3)
 
 
 def get_greeting():

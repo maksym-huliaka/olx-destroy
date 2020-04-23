@@ -7,10 +7,8 @@ proxy_list=[]
 
 def get_proxy():
     driver = get_driver("")
-    driver.get("https://hidemy.name/ru/proxy-list/")
+    driver.get("https://hidemy.name/ru/proxy-list/?maxtime=900&type=hs#list")
     time.sleep(6)
-    html = driver.page_source
-    print(html)
     trs = driver.find_elements_by_css_selector('tr')
     proxies =[]
     for tr in trs:
@@ -30,7 +28,10 @@ def get_proxy_driver():
         while True:
             try:
                 proxy_list = get_proxy()
-                break
+                if proxy_list:
+                    break
+                else:
+                    print("[WAIT][DRIVER] Proxy list is empty! Getting new List...")
             except:
                 print("[ERROR][PROXY] Can't catch proxies. Trying again..")
 

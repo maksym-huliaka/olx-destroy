@@ -30,7 +30,7 @@ def inject(req, req_body, res, res_body):
 def get_driver(proxy):
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--disable-gpu')
-    #chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument(
@@ -43,8 +43,8 @@ def get_driver(proxy):
         wire_options = {
             'custom_response_handler': inject,
             'proxy': {
-                'http': "http://lol:kek@" + proxy,
-                'https': "https://lol:kek@" + proxy,
+                'http': "http://" + proxy,
+                'https': "https://" + proxy,
                 'no_proxy': 'localhost,127.0.0.1,dev_server:8080',
             }
         }
