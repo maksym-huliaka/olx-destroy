@@ -38,6 +38,8 @@ def get_driver(proxy):
     chrome_options.add_argument("window-size=1200,800")
     wire_options = None
     if proxy:
+        prefs = {"profile.managed_default_content_settings.images": 2}
+        chrome_options.add_experimental_option("prefs", prefs)
         wire_options = {
             'custom_response_handler': inject,
             'proxy': {
