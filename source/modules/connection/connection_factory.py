@@ -53,4 +53,5 @@ def get_driver(proxy):
                               #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                               options=chrome_options)
     driver.header_overrides = {'Accept-Encoding': 'gzip'}
+    driver.set_page_load_timeout(90)
     return driver
