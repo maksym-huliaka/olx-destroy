@@ -4,7 +4,7 @@ from models.publication import Publication
 from modules.database.repository.impl import word_repository
 
 from modules.connection.proxy_factory import get_driver, get_proxy_driver
-from modules.publication_filter import filter_by_time, filter_by_words, save_current_time
+from modules.publication_filter import filter_by_time, filter_by_words, save_current_time, get_current_time
 
 
 def get_clean_publications(publications, url, proxy_established_driver, chatid, BOT):
@@ -26,16 +26,16 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
             try:
                 proxy_established_driver.get(pub.link)
                 pub_desc = proxy_established_driver.find_element_by_id("textContent").text
-                print('[OK] Publication is opened: '+pub.link)
+                print(get_current_time()+' [OK] Publication is opened: '+pub.link)
             except:
-                print("[ERROR] Can't find element by ID on: "+pub.link,sys.exc_info()[0])
+                print(get_current_time()+" [ERROR] Can't find element by ID on: "+pub.link,sys.exc_info()[0])
                 proxy_established_driver.close()
                 proxy_established_driver = get_proxy_driver()
                 continue
             break
 
         if not filter_by_words(pub_desc, words):
-            print("[BAD^]")
+            print(get_current_time()+" [BAD^]")
             continue
         pub.description=pub_desc
         pubs_list.append(pub)
@@ -46,17 +46,16 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
 def get_publications(url,chatid, BOT):
     publications = ""
     proxy_established_driver = get_proxy_driver()
-    proxy_established_driver.set_timeout(90)
     while True:
         try:
-            print("[WAIT] Opening web page..")
+            print(get_current_time()+" [WAIT] Opening web page..")
             proxy_established_driver.get(url.url)
             publications = proxy_established_driver.find_elements_by_class_name("offer-wrapper")
             if not publications:
                 raise Exception()
-            print("[OK] All publication are catched!")
+            print(get_current_time()+" [OK] All publication are catched!")
         except:
-            print("[ERROR] Can't find element by css selector.",sys.exc_info()[0])
+            print(get_current_time()+" [ERROR] Can't find element by css selector.",sys.exc_info()[0])
             proxy_established_driver.close()
             proxy_established_driver = get_proxy_driver()
             continue

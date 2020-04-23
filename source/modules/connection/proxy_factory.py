@@ -2,6 +2,7 @@ import time
 
 from modules.connection.connection_factory import get_driver
 from modules.connection.proxy_tester import filter_proxies
+from modules.publication_filter import get_current_time
 
 proxy_list=[]
 
@@ -16,26 +17,26 @@ def get_proxy():
         proxies.append(proxy)
     driver.close()
     proxies = filter_proxies(proxies)
-    print("[OK][PROXY] Found: %s" %len(proxies))
+    print(get_current_time()+" [OK][PROXY] Found: %s" %len(proxies))
     return proxies
 
 
 def get_proxy_driver():
-    print("[WAIT][DRIVER] Prepearing proxy driver..")
+    print(get_current_time()+" [WAIT][DRIVER] Prepearing proxy driver..")
     global proxy_list
     if not proxy_list:
-        print("[WAIT][DRIVER] Proxy list is empty! Getting new List...")
+        print(get_current_time()+" [WAIT][DRIVER] Proxy list is empty! Getting new List...")
         while True:
             try:
                 proxy_list = get_proxy()
                 if proxy_list:
                     break
                 else:
-                    print("[WAIT][DRIVER] Proxy list is empty! Getting new List...")
+                    print(get_current_time()+" [WAIT][DRIVER] Proxy list is empty! Getting new List...")
             except:
-                print("[ERROR][PROXY] Can't catch proxies. Trying again..")
+                print(get_current_time()+" [ERROR][PROXY] Can't catch proxies. Trying again..")
 
     proxy = proxy_list.pop()
     proxy_established_driver = get_driver(proxy)
-    print("[OK][DRIVER] Driver with proxy is initialized")
+    print(get_current_time()+" [OK][DRIVER] Driver with proxy is initialized")
     return proxy_established_driver

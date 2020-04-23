@@ -3,6 +3,8 @@ from threading import Thread
 
 import requests
 
+from modules.publication_filter import get_current_time
+
 timeout = 5
 good_list = []
 THREADS = 8
@@ -20,7 +22,7 @@ def verify_list(proxy_list, thread_number):
             r = requests.get("http://ipinfo.io/json", proxies=proxy_dict, timeout=timeout)
             site_code = r.json()
             ip = site_code['ip']
-            print('[PROXY][THREAD:', thread_number,'] Proxy works:', prox)
+            print(get_current_time()+' [PROXY][THREAD:', thread_number,'] Proxy works:', prox)
             working_list.append(prox)
         except Exception as e:
             nihco=";)"

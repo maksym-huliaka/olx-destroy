@@ -44,6 +44,8 @@ def get_last_update_time(url):
 
 
 def save_current_time(url):
-    tz = pytz.timezone('Europe/Kiev')
-    current_time = datetime.now(tz).strftime("%m-%d %H:%M")
-    time_repository.update(current_time, url.name)
+    time_repository.update(get_current_time(), url.name)
+
+def get_current_time():
+    timezone = pytz.timezone('Europe/Kiev')
+    return datetime.now(timezone).strftime("%m-%d %H:%M")

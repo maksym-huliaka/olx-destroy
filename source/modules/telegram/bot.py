@@ -2,6 +2,8 @@ import traceback
 
 import telebot
 
+from modules.publication_filter import get_current_time
+from modules.states import bussy, get_bussy, set_bussy
 from modules.telegram.bot_helper import send_publications, get_greeting, set_restriction_word, \
     get_urls, add_url, remove_url, run_url, get_url_greeting
 
@@ -15,7 +17,7 @@ keyboard1.row('/url', '/word')
 
 @BOT.message_handler(commands=['start'])
 def start_message(message):
-    print("[OK][BOT] Catched message : " + message.text)
+    print(get_current_time()+" [OK][BOT] Catched message : " + message.text)
     BOT.send_message(message.chat.id,
                      get_greeting(),
                      reply_markup=keyboard1)
@@ -23,7 +25,7 @@ def start_message(message):
 
 @BOT.message_handler(commands=['url'])
 def url_message(message):
-    print("[OK][BOT] Catched message : " + message.text)
+    print(get_current_time()+" [OK][BOT] Catched message : " + message.text)
     command = ""
     try:
         command = message.text.split()[1]
@@ -79,7 +81,13 @@ def word_message(message):
 
 @BOT.message_handler(commands=['pubs'])
 def pubs_message(message):
-    print("[OK][BOT] Catched message : " + message.text)
+    print(get_current_time()+" [OK][BOT] Catched message : " + message.text)
     BOT.send_message(message.chat.id, '🕛 Wait a minute! Plz...')
-    send_publications(message.chat.id, BOT)
-    print("[OK][BOT] message sent")
+    if not get_bussy():
+        set_bussy(True)
+        send_publications(message.chat.id, BOT)
+        set_bussy(False)
+    else:
+        BOT.send_message(message.chat.id, '✋🏻 Sorry.. in progress...')
+
+    print(get_current_time()+" [OK][BOT] message sent")
