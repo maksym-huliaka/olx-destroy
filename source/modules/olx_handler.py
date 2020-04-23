@@ -46,6 +46,7 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
 def get_publications(url,chatid, BOT):
     publications = ""
     proxy_established_driver = get_proxy_driver()
+    proxy_established_driver.set_timeout(90)
     while True:
         try:
             print("[WAIT] Opening web page..")
