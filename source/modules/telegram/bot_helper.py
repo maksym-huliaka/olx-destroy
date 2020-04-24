@@ -43,6 +43,7 @@ def send_publications(chatid, BOT):
     if url is None:
         BOT.send_message(chatid, "🌏 Initializing URL..")
         url = default_url_repository.get()
+        print(url)
     BOT.send_message(chatid, "🔐 Accessing web-pages..")
     salo = get_publications(url, chatid, BOT)
     if not salo:
