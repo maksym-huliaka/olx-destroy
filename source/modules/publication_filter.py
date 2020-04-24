@@ -33,19 +33,20 @@ def get_date(text):
     try:
         re.search(TODAY_PATTERN, text).group(0)
         result = re.search(TIME_PATTERN, text).group(0)
-        result = datetime.now().strftime("%m-%d ")+result
+        result = datetime.now().strftime("%m-%d")+result
     except:
         return False
     return datetime.strptime(result, '%m-%d %H:%M')
 
 
 def get_last_update_time(url):
-    return datetime.strptime(time_repository.get(url.name), '%m-%d %H:%M')
+    repo_time = time_repository.get(url.name)
+    time = datetime.strptime(repo_time, '%m-%d %H:%M')
+    return time
 
 
 def save_current_time(url):
     time_repository.update(get_current_time(), url.name)
 
 def get_current_time():
-    timezone = pytz.timezone('Europe/Kiev')
-    return datetime.now(timezone).strftime("%m-%d %H:%M")
+    return datetime.now().strftime("%m-%d %H:%M")
