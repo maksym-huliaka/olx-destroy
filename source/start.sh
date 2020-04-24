@@ -1,6 +1,8 @@
 #!/bin/bash
-while :
-do
-    python3 main.py
-    echo "[FATAL] 'olx-destroy' crashed with exit code $?. Restarting...">> log
-end
+
+(
+    until python3 main.py; do
+        echo "[FATAL] crashed with exit code $?.  Respawning... " >&2
+        sleep 5
+    done
+) &
