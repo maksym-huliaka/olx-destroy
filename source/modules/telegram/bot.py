@@ -29,7 +29,7 @@ def start_message(message):
 @BOT.message_handler(commands=['status'])
 def start_message(message):
     if not get_bussy():
-        BOT.send_message(message.chat.id, "💤 I'm chilling. Ready for ̶b̶l̶o̶w̶job.")
+        BOT.send_message(message.chat.id, "💤 I'm chilling. Ready for job.")
     else:
         BOT.send_message(message.chat.id, "👨🏻‍💻 I'm bussy. Go away, plz..")
 
