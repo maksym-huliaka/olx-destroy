@@ -63,5 +63,6 @@ def set_restriction_word(message):
 
 
 def send_test_message(message, BOT):
-    text = message.text.split()[1:]
+    text = " ".join(message.text.split()[1:])
+    print(text)
     BOT.send_message(config().get("telegram.chat_id"), text)

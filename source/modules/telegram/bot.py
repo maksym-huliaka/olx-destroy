@@ -22,7 +22,7 @@ def start_message(message):
                      get_greeting(),
                      reply_markup=keyboard1)
 
-@BOT.message_handler(commands=['sart'])
+@BOT.message_handler(commands=['test'])
 def start_message(message):
     send_test_message(message, BOT)
 
