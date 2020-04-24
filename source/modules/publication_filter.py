@@ -33,7 +33,7 @@ def get_date(text):
     try:
         re.search(TODAY_PATTERN, text).group(0)
         result = re.search(TIME_PATTERN, text).group(0)
-        result = datetime.now().strftime("%m-%d")+result
+        result = datetime.now().strftime("%m-%d ")+result
     except:
         return False
     return datetime.strptime(result, '%m-%d %H:%M')
