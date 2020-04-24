@@ -44,8 +44,9 @@ def send_publications(chatid, BOT):
     else:
         salo = get_publications(url, chatid, BOT)
         if not salo:
-            BOT.send_message(chatid, "😥 There is no new publications.")
-
+            BOT.send_message(chatid, "😥 There are no new publications.")
+            return
+        BOT.send_message(chatid, "☝ There are all publications for now.")
 
 def get_greeting():
     return "🙋 Hello, my Friend, wanna  show u some things? \n\nYou can use that commands:\n🌏 To add new URL ya want to search pubs: /url\n📢 To show pubs: /pubs\n📛 To add restriction word: /word {ur word} {category}\n\nGut Luk(pognali) ♿"

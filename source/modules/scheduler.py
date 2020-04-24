@@ -13,6 +13,7 @@ def job_function ():
     chat_id=config().get("telegram.chat_id")
     if not get_bussy():
         set_bussy(True)
+        BOT.send_message(chat_id, "⏳ Schedule job started'.")
         send_publications(chat_id, BOT)
         set_bussy(False)
 

@@ -26,6 +26,13 @@ def start_message(message):
 def start_message(message):
     send_test_message(message, BOT)
 
+@BOT.message_handler(commands=['status'])
+def start_message(message):
+    if not get_bussy():
+        BOT.send_message(message.chat.id, "💤 I'm chilling. Ready for ̶b̶l̶o̶w̶job.")
+    else:
+        BOT.send_message(message.chat.id, "👨🏻‍💻 I'm bussy. Go away, plz..")
+
 @BOT.message_handler(commands=['url'])
 def url_message(message):
     print(get_current_time()+" [OK][BOT] Catched message : " + message.text)
