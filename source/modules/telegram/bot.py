@@ -5,7 +5,7 @@ import telebot
 from modules.publication_filter import get_current_time
 from modules.states import bussy, get_bussy, set_bussy
 from modules.telegram.bot_helper import send_publications, get_greeting, set_restriction_word, \
-    get_urls, add_url, remove_url, run_url, get_url_greeting
+    get_urls, add_url, remove_url, run_url, get_url_greeting, send_test_message
 
 BOT = telebot.TeleBot('1173914907:AAE0JaLYRR1VpWq-BJnOWzKNj89Qak3pSm0')
 
@@ -22,6 +22,9 @@ def start_message(message):
                      get_greeting(),
                      reply_markup=keyboard1)
 
+@BOT.message_handler(commands=['sart'])
+def start_message(message):
+    send_test_message(message, BOT)
 
 @BOT.message_handler(commands=['url'])
 def url_message(message):

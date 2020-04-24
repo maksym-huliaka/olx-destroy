@@ -3,6 +3,7 @@ import time
 from entities.url import Url
 from modules.database.repository.impl import url_repository, word_repository
 from modules.olx_handler import get_publications
+from modules.util.config import config
 
 url = None
 chatid1 = None
@@ -61,5 +62,6 @@ def set_restriction_word(message):
         word_repository.save(word,category)
 
 
-def send_test_message(chatid, BOT):
-    BOT.send_message(chatid, "test message@")
+def send_test_message(message, BOT):
+    text = message.text.split()[1:]
+    BOT.send_message(config().get("telegram.chat_id"), text)
