@@ -63,7 +63,15 @@ def set_restriction_word(message):
         word_repository.save(word,category)
 
 
-def send_test_message(message, BOT):
+def throw_exception(message, BOT):
     text = " ".join(message.text.split()[1:])
     print(text)
     BOT.send_message(config().get("telegram.chat_id"), text)
+
+def send_test_message(message, BOT):
+    try:
+        text = " ".join(message.text.split()[1:])
+        print(text)
+        BOT.send_message(config().get("telegram.chat_id"), text)
+    except:
+        a="do nothing"
