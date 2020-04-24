@@ -1,7 +1,7 @@
 import time
 
 from entities.url import Url
-from modules.database.repository.impl import url_repository, word_repository
+from modules.database.repository.impl import url_repository, word_repository, default_url_repository
 from modules.olx_handler import get_publications
 from modules.util.config import config
 
@@ -33,6 +33,7 @@ def run_url(message):
     url_name = message.text.split()[2]
     global url
     url = url_repository.get_by_name(url_name)
+    default_url_repository.update(url)
 
 
 def send_publications(chatid, BOT):
@@ -40,13 +41,14 @@ def send_publications(chatid, BOT):
     chatid1 = chatid
     global url
     if url is None:
-        BOT.send_message(chatid, "⚠WARNING!\nUninitialized url")
-    else:
-        salo = get_publications(url, chatid, BOT)
-        if not salo:
-            BOT.send_message(chatid, "😥 There are no new publications.")
-            return
-        BOT.send_message(chatid, "☝ There are all publications for now.")
+        BOT.send_message(chatid, "🌏 Initializing URL..")
+        url = default_url_repository.get()
+    BOT.send_message(chatid, "🔐 Accessing web-pages..")
+    salo = get_publications(url, chatid, BOT)
+    if not salo:
+        BOT.send_message(chatid, "😥 There are no new publications.")
+        return
+    BOT.send_message(chatid, "☝ There are all publications for now.")
 
 def get_greeting():
     return "🙋 Hello, my Friend, wanna  show u some things? \n\nYou can use that commands:\n🌏 To add new URL ya want to search pubs: /url\n📢 To show pubs: /pubs\n📛 To add restriction word: /word {ur word} {category}\n\nGut Luk(pognali) ♿"
