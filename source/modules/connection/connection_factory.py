@@ -1,4 +1,4 @@
-import chromedriver_binary
+#import chromedriver_binary
 import os
 from gzip import compress, decompress
 
