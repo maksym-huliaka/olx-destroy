@@ -20,3 +20,9 @@ create table urls(
                      name text UNIQUE ,
                      category text
 );
+
+create table default_url(
+                     url text,
+                     name text,
+                     category text
+);
