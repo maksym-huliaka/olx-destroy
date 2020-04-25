@@ -1,14 +1,11 @@
-import time
 import traceback
 
 import telebot
-from apscheduler.schedulers.background import BackgroundScheduler
 
 from modules.publication_filter import get_current_time
 from modules.states import bussy, get_bussy, set_bussy
 from modules.telegram.bot_helper import send_publications, get_greeting, set_restriction_word, \
     get_urls, add_url, remove_url, run_url, get_url_greeting, send_test_message, throw_exception
-from modules.util.config import config
 
 BOT = telebot.TeleBot('1173914907:AAE0JaLYRR1VpWq-BJnOWzKNj89Qak3pSm0')
 
@@ -108,20 +105,3 @@ def pubs_message(message):
         BOT.send_message(message.chat.id, '✋🏻 Sorry.. in progress...')
 
     print(get_current_time()+" [OK][BOT] message sent")
-
-
-scheduler = BackgroundScheduler()
-
-def job_function ():
-    print (get_current_time()+' [JOB] Schedule job started')
-    chat_id=config().get("telegram.chat_id")
-    if not get_bussy():
-        set_bussy(True)
-        time.sleep(0.5)
-        BOT.send_message(chat_id, "⏳ Schedule job started'.")
-        send_publications(chat_id, BOT)
-        set_bussy(False)
-
-def start_scheduler():
-    scheduler.add_job(job_function, trigger='cron', minute='*/30')
-    scheduler.start()
