@@ -3,6 +3,7 @@ import time
 from entities.url import Url
 from modules.database.repository.impl import url_repository, word_repository, default_url_repository
 from modules.olx_handler import get_publications
+from modules.publication_filter import get_current_time
 from modules.util.config import config
 
 url = None
@@ -48,7 +49,9 @@ def send_publications(chatid, BOT):
     salo = get_publications(url, chatid, BOT)
     if not salo:
         BOT.send_message(chatid, "😥 There are no new publications.")
+        print(get_current_time()+' [OK] Completed.')
         return
+    print(get_current_time()+' [OK] Completed.')
     BOT.send_message(chatid, "☝ There are all publications for now.")
 
 def get_greeting():
