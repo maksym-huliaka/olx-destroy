@@ -55,13 +55,13 @@ def get_publications(url,chatid, BOT):
                 raise Exception()
             print(get_current_time()+" [OK] All publication are catched!")
         except:
-            print(get_current_time()+" [ERROR] Can't find element by css selector.",sys.exc_info()[0])
+            print(get_current_time()+" [ERROR] Can't find element by css selector.", sys.exc_info()[0])
             proxy_established_driver.close()
             proxy_established_driver = get_proxy_driver()
             continue
         break
     clean_publications = get_clean_publications(publications, url, proxy_established_driver,chatid, BOT)
     save_current_time(url)
-    proxy_established_driver.close()
+    proxy_established_driver.quit()
     return clean_publications
 
