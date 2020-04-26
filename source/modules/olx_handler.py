@@ -62,5 +62,6 @@ def get_publications(url,chatid, BOT):
         break
     clean_publications = get_clean_publications(publications, url, proxy_established_driver,chatid, BOT)
     save_current_time(url)
+    proxy_established_driver.close()
     return clean_publications
 
