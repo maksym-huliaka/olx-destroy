@@ -40,6 +40,10 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
         pub.description=pub_desc
         pubs_list.append(pub)
         BOT.send_message(chatid, pub.to_string())
+    try:
+        proxy_established_driver.close()
+    except:
+        d="do nothing"
     return pubs_list
 
 
@@ -62,9 +66,5 @@ def get_publications(url,chatid, BOT):
         break
     clean_publications = get_clean_publications(publications, url, proxy_established_driver,chatid, BOT)
     save_current_time(url)
-    try:
-        proxy_established_driver.close()
-    except:
-        d="do nothing"
     return clean_publications
 

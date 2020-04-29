@@ -20,5 +20,5 @@ def job_function():
 
 
 def start_scheduler():
-    scheduler.add_job(job_function, trigger='cron', minute='*/30')
+    scheduler.add_job(job_function, trigger='cron', minute='*/10')
     scheduler.start()
