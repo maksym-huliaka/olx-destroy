@@ -41,7 +41,8 @@ def get_driver(proxy):
         prefs = {"profile.managed_default_content_settings.images": 2}
         chrome_options.add_experimental_option("prefs", prefs)
         wire_options = {
-            'custom_response_handler': inject,
+            'custom_response_handler': inject
+            ,
             'proxy': {
                 'http': "http://" + proxy,
                 'https': "https://" + proxy,
