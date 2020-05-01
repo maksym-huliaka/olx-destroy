@@ -30,6 +30,7 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
             except:
                 print(get_current_time()+" [ERROR] Can't find element by ID on: "+pub.link,sys.exc_info()[0])
                 proxy_established_driver.close()
+                proxy_established_driver.quit()
                 proxy_established_driver = get_proxy_driver()
                 continue
             break
@@ -42,6 +43,7 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
         BOT.send_message(chatid, pub.to_string())
     try:
         proxy_established_driver.close()
+        proxy_established_driver.quit()
     except:
         d="do nothing"
     return pubs_list
@@ -61,6 +63,7 @@ def get_publications(url,chatid, BOT):
         except:
             print(get_current_time()+" [ERROR] Can't find element by css selector.", sys.exc_info()[0])
             proxy_established_driver.close()
+            proxy_established_driver.quit()
             proxy_established_driver = get_proxy_driver()
             continue
         break

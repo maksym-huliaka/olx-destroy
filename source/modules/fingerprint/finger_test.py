@@ -11,4 +11,5 @@ def test_fingers():
     time.sleep(5)
     #driver.save_screenshot("modules/fingerprint/screenshot4.png")
     driver.close()
+    driver.quit()
     print(get_current_time()+" [OK][TEST] Fingerprints passed")

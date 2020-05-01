@@ -16,6 +16,7 @@ def get_proxy():
         proxy = tr.find_elements_by_css_selector("td")[0].text+":"+tr.find_elements_by_css_selector("td")[1].text
         proxies.append(proxy)
     driver.close()
+    driver.quit()
     proxies = filter_proxies(proxies)
     print(get_current_time()+" [OK][PROXY] Found: %s" %len(proxies))
     return proxies
