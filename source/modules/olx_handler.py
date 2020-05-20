@@ -29,6 +29,11 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
                 print(get_current_time()+' [OK] Publication is opened: '+pub.link)
             except:
                 print(get_current_time()+" [ERROR] Can't find element by ID on: "+pub.link,sys.exc_info()[0])
+                try:
+                    proxy_established_driver.find_elements_by_id("ad-not-available-box")
+                    break
+                except:
+                    nothing = "do nothing"
                 proxy_established_driver.close()
                 proxy_established_driver.quit()
                 proxy_established_driver = get_proxy_driver()
