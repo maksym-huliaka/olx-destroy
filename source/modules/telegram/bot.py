@@ -1,3 +1,4 @@
+import sys
 import traceback
 
 import telegram
@@ -102,8 +103,12 @@ def pubs_message(update, context):
     context.bot.send_message(update.effective_chat.id, '🕛 Wait a minute! Plz...')
     if not get_bussy():
         set_bussy(True)
-        send_publications(update.effective_chat.id, context.bot)
-        set_bussy(False)
+        try:
+            send_publications(update.effective_chat.id, context.bot)
+        except:
+            print(get_current_time()+" [ERROR] Publication getting method crashed with: ",sys.exc_info()[0])
+        finally:
+            set_bussy(False)
     else:
         context.bot.send_message(update.effective_chat.id, '✋🏻 Sorry.. in progress...')
 
