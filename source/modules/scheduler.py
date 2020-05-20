@@ -1,3 +1,5 @@
+import sys
+
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from modules.publication_filter import get_current_time
@@ -14,10 +16,13 @@ def job_function():
     chat_id = config().get("telegram.chat_id")
     if not get_bussy():
         set_bussy(True)
-        BOT.send_message(chat_id, "⏳ Schedule job started'.")
-        send_publications(chat_id, BOT)
-        set_bussy(False)
-
+        try:
+            BOT.send_message(chat_id, "⏳ Schedule job started'.")
+            send_publications(chat_id, BOT)
+        except:
+            print(get_current_time()+" [ERROR] Scheduled job crashed with: ",sys.exc_info()[0])
+        finally:
+            set_bussy(False)
 
 def start_scheduler():
     scheduler.add_job(job_function, trigger='cron', minute='*/30')
