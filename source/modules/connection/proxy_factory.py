@@ -8,7 +8,7 @@ proxy_list=[]
 
 def get_proxy():
     driver = get_driver("")
-    driver.get("https://hidemy.name/ru/proxy-list/?maxtime=200&type=hs#list")
+    driver.get("https://hidemy.name/ru/proxy-list/?maxtime=500&type=hs#list")
     time.sleep(6)
     trs = driver.find_elements_by_css_selector('tr')
     proxies =[]
