@@ -25,7 +25,7 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
         while True:
             try:
                 proxy_established_driver.get(pub.link)
-                pub_desc = proxy_established_driver.find_element_by_id("textContent").text
+                pub_desc = proxy_established_driver.find_element_by_xpath("/html/body/div/div[1]/div[3]/div[2]/div[1]/div[2]/div[8]/div").text
                 print(get_current_time()+' [OK] Publication is opened: '+pub.link)
             except:
                 print(get_current_time()+" [ERROR] Can't find element by ID on: "+pub.link,sys.exc_info()[0])
