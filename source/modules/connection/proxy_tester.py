@@ -5,7 +5,7 @@ import requests
 
 from modules.publication_filter import get_current_time
 
-timeout = 600
+timeout = 1000
 good_list = []
 THREADS = 8
 
