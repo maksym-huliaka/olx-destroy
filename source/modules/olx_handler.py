@@ -29,7 +29,7 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
                 print(get_current_time()+' [OK] Publication is opened: '+pub.link)
             except:
                 print(get_current_time()+" [ERROR] Can't find element by ID on: "+pub.link,sys.exc_info()[0])
-                proxy_established_driver.close()
+                proxy_established_driver.quit()
                 proxy_established_driver = get_proxy_driver()
                 continue
             break
@@ -56,7 +56,7 @@ def get_publications(url,chatid, BOT):
             print(get_current_time()+" [OK] All publication are catched!")
         except:
             print(get_current_time()+" [ERROR] Can't find element by css selector.",sys.exc_info()[0])
-            proxy_established_driver.close()
+            proxy_established_driver.quit()
             proxy_established_driver = get_proxy_driver()
             continue
         break
