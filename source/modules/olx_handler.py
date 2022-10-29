@@ -45,7 +45,7 @@ def get_clean_publications(publications, url, proxy_established_driver, chatid, 
 
 def get_publications(url,chatid, BOT):
     publications = ""
-    proxy_established_driver = get_driver("")
+    proxy_established_driver = get_proxy_driver()
     while True:
         try:
             print(get_current_time()+" [WAIT] Opening web page..")
@@ -57,7 +57,7 @@ def get_publications(url,chatid, BOT):
         except:
             print(get_current_time()+" [ERROR] Can't find element by css selector.",sys.exc_info()[0])
             proxy_established_driver.quit()
-            proxy_established_driver = get_driver("")
+            proxy_established_driver = get_proxy_driver()
             continue
         break
     clean_publications = get_clean_publications(publications, url, proxy_established_driver,chatid, BOT)
