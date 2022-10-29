@@ -49,7 +49,8 @@ def get_driver(proxy):
             }
         }
 
-    driver = webdriver.Chrome(seleniumwire_options=wire_options,
+    driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub",
+                              seleniumwire_options=wire_options,
                               #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                               options=chrome_options)
     driver.header_overrides = {'Accept-Encoding': 'gzip'}
