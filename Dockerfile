@@ -30,8 +30,11 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 # Set display port as an environment variable
 ENV DISPLAY=:99
 
-RUN pip install --upgrade pip
+COPY . /app
+WORKDIR /app
 
-RUN pip install -r requirements.txt
+RUN pip3 install --upgrade pip
+
+RUN pip3 install -r requirements.txt
 
 CMD ["python3", "-u", "./source/main.py"]
