@@ -7,7 +7,7 @@ from lxml.etree import ParserError
 from lxml.html import builder
 from selenium import webdriver
 from seleniumwire import webdriver
-
+from seleniumwire.webdriver.common.desired_capabilities import DesiredCapabilities
 from modules.path import FILE_JS_INJECTOR
 
 script_elem_to_inject = builder.SCRIPT(open(FILE_JS_INJECTOR, 'r').read())
@@ -28,7 +28,8 @@ def inject(req, req_body, res, res_body):
 
 
 def get_driver(proxy):
-    chrome_options = webdriver.ChromeOptions()
+    #chrome_options = webdriver.ChromeOptions()
+    chrome_options = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME)
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
