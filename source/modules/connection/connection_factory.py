@@ -32,7 +32,7 @@ def get_driver(proxy):
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
-    #chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument(
         "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.113 Safari/537.36")
     chrome_options.add_argument("window-size=1200,800")
@@ -49,9 +49,8 @@ def get_driver(proxy):
             }
         }
 
-    driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub",
-                              seleniumwire_options=wire_options,
-                              #executable_path=os.environ.get("CHROMEDRIVER_PATH"),
+    driver = webdriver.Chrome(seleniumwire_options=wire_options,
+                              executable_path=os.environ.get("CHROMEDRIVER_PATH"),
                               options=chrome_options)
     driver.header_overrides = {'Accept-Encoding': 'gzip'}
     driver.set_page_load_timeout(90)
